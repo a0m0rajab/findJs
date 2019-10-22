@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Show page</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+
+<body>
+    <script>
+        function search(word) {
+            let subStr = document.getElementById("para").innerText.toLowerCase();
+            word = word.toLowerCase();
+            let index = -1,
+                location = [];
+            // V2
+            // let sugLoc = [],
+            //     lastIndex = subStr.length + 1;
+
+            //..
+            do {
+                index = subStr.indexOf(word, index + 1);
+                // V2
+                // lastIndex = subStr.lastIndexOf(word, lastIndex);
+                // sugLoc.push(lastIndex);
+                // lastIndex = lastIndex - word.length;
+                // .. 
+                location.push(index)
+            } while (index !== -1);
+            location.pop();
+            // sugLoc.pop();
+            console.log(location.length);
+            return location;
+        }
+        // used before checking Last index of...
+        function nextWord(word) {
+            let subStr = document.getElementById("para").innerText.toLowerCase()
+            let location = search(word);
+            let sugLoc = []
+            location.forEach(
+                e => {
+                    sugLoc.push(subStr.indexOf(" ", e))
+                }
+            );
+            return sugLoc;
+        }
+        // last index of works like index of but in reverse order, and it brings the first element index..
+        function nextWorLoc(word) {
+            ar = search(word)
+            ar.forEach(function(part, index) {
+                this[index] = part + word.length;
+            }, ar);
+            return ar;
+        }
+
+        function nextWodList(word) {
+            let subStr = document.getElementById("para").innerText.toLowerCase();
+            let nextWord;
+            let ls = nextWorLoc(word),
+                wls = [];
+
+            //str.substring(1, 3)
+
+            for (let index = 0; index < ls.length; index++) {
+
+                nextWord = subStr.substring(ls[index], subStr.indexOf(" ", ls[index] + 1)).trim()
+                if (nextWord.length <= 1) {
+
+                    ls[index] += 1;
+                    index--;
+                    continue
+                }
+                wls.push(nextWord)
+            }
+            return wls;
+        }
+
+        function report() {
+            h = document.createElement("p");
+            h.innerText = nextWodList(searchQue.value).join("\n");
+            document.body.appendChild(h);
+        }
+    </script>
+    <input id=searchQue type="text">
+    <input type="button" value="Find" onclick="report()">
+
+    <hr>
+    <p id="para">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam et efficitur nisl. Aliquam tortor purus, interdum interdum lacus non, cursus posuere dui. Maecenas nec velit risus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames
+        ac turpis egestas. Lorem Pellentesque egestas nulla purus, quis varius nunc scelerisque vel. Phasellus non Lorem. aliquet purus. Fusce tristique consectetur quam convallis vehicula. Donec fringilla, lectus sit amet fermentum sagittis, massa diam
+        pretium nisl, ac finibus leo mauris sed elit. Aenean imperdiet feugiat auctor. Cras Lorem. posuere enim nisi. Nam mollis Lorem turpis at sapien lacinia, efficitur sagittis ante ornare. Nulla dictum purus diam, a rhoncus elit iaculis non. In commodo,
+        massa eu sodales cursus, est enim maximus lacus, ac condimentum magna nunc tempor orci. Integer sagittis aliquam luctus. Vivamus eget odio sed dolor interdum accumsan a eget leo. Integer non rhoncus lacus, id congue tellus.
+
+    </p>
+
+    <p id="para1">
+        Aliquam lacinia est tincidunt orci placerat sagittis. Lorem Pellentesque pellentesque efficitur erat eget consequat. In hac habitasse platea dictumst. Fusce rhoncus ex nunc. Donec elementum ullamcorper ante et accumsan. Praesent auctor ut ante ut rhoncus.
+        Etiam accumsan sapien sagittis varius tempus. Duis cursus enim vitae rhoncus ornare. Quisque arcu est, vestibulum non feugiat vitae, dapibus pharetra lectus.
+
+
+    </p>
+    <hr> result:
+
+</body>
+
+</html>
