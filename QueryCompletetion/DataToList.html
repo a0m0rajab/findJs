@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Data To list.
+    </title>
+</head>
+
+<body>
+    <input id=searchQue type="text" onkeyup="report()">
+    <input id=Next type="button" value="Go to next" onkeyup="nextSura()">
+
+    <p id=dataShow></p>
+    <script>
+        // array that hold an array of verses of each sura.
+        let sura = [];
+        const URL = "a0m0rajab.githibu.io/"
+        const Quran = "quran.txt"
+            // need to add target array to make this global and even add read function at the end.... instead of dataToArray
+        function readExternal(url, target, callBack) {
+            console.log("reading external data from " + url)
+            fetch(url)
+                .then(r => r.text()) //response
+                .then(t => callBack(t, target)); //text
+        }
+
+
+
+        function dataToArray(t, targetArray) {
+            // split the file to line, which downloaded from Tanzil.
+            let lines = t.split("\n");
+            console.log("Quran Verses= " + lines.length);
+            // temp to hold the number of sura, so we can use it to trigger the next sura and empty the verses array.
+            let temp = 0;
+            let versesArray = [];
+            for (let line of lines) {
+                line = line.split("|");
+                versesArray.push(line[2])
+                if (temp != line[0]) {
+                    targetArray[temp] = versesArray;
+                    console.log("Sura number " + temp + " has " + versesArray.length + " verses")
+                    temp = line[0];
+                    versesArray = []
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
