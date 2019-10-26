@@ -1,0 +1,55 @@
+ب
+س
+ِ
+
+ْ
+م
+ 
+ا
+ل
+ّ
+َ
+ه
+ر
+ح
+ن
+ي
+د
+ُ
+ع
+ك
+و
+إ
+ت
+ص
+ط
+ق
+ذ
+أ
+غ
+ض
+ف
+ً
+ى
+ؤ
+ة
+ز
+آ
+خ
+ئ
+ء
+ٌ
+ش
+ظ
+ج
+ث
+ٍ
+
+let letters = new Set()
+sura.forEach(e => {
+e.forEach(e => {
+for(i = 0; i < e.length; i++)
+		letters.add(e.charAt(i))
+
+})
+})

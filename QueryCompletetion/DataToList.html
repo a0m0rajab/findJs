@@ -10,15 +10,26 @@
 </head>
 
 <body>
-    <input id=searchQue type="text" onkeyup="report()">
-    <input id=Next type="button" value="Go to next" onkeyup="nextSura()">
+    <input id=Next type="button" value="Back" onclick="preSura()">
+
+    <input id=searchQue type="number" min=1 max=114 onchange="setSura(Number(this.value)-1)" onkeyup="setSura(Number(this.value)-1)">
+    <input id=Next type="button" value="next" onclick="nextSura()">
+
 
     <p id=dataShow></p>
     <script>
         // array that hold an array of verses of each sura.
         let sura = [];
+        let chars = {
+            harakat: {
+                kasra: `ِ`
+            },
+            letters: []
+        }
+        let lastSura = 0;
         const URL = "a0m0rajab.githibu.io/"
-        const Quran = "quran.txt"
+        const Quran = "quran-simple-clean.txt"
+        let testURL = "https://a0m0rajab.github.io/findJs/QueryCompletetion/quran.txt"
             // need to add target array to make this global and even add read function at the end.... instead of dataToArray
         function readExternal(url, target, callBack) {
             console.log("reading external data from " + url)
@@ -28,25 +39,69 @@
         }
 
 
-
         function dataToArray(t, targetArray) {
             // split the file to line, which downloaded from Tanzil.
             let lines = t.split("\n");
             console.log("Quran Verses= " + lines.length);
             // temp to hold the number of sura, so we can use it to trigger the next sura and empty the verses array.
-            let temp = 0;
             let versesArray = [];
             for (let line of lines) {
                 line = line.split("|");
-                versesArray.push(line[2])
-                if (temp != line[0]) {
-                    targetArray[temp] = versesArray;
-                    console.log("Sura number " + temp + " has " + versesArray.length + " verses")
-                    temp = line[0];
-                    versesArray = []
+                let suraN = line[0] - 1;
+                if (targetArray[suraN] == undefined) {
+                    targetArray[suraN] = [];
                 }
+                targetArray[suraN].push(line[2])
             }
+            displaySura(dataShow, sura[0])
         }
+        let n = 0;
+
+        function setSura(h = 0) {
+            h = Number(h)
+                //console.log(h);
+            if (h > 113 || h < 0)
+                setSur(lastSura)
+                // return dataShow.innerText = "Please Choose a number between 1-114"
+            lastSura = h
+            searchQue.value = h + 1;
+            displaySura(dataShow, sura[h])
+        }
+
+
+
+        function nextSura() {
+            n++;
+            if (n == 114) {
+                n = 0;
+            }
+            setSura(n)
+        }
+
+        function preSura() {
+            n--;
+            if (n == -1)
+                n = 113;
+            setSura(n)
+        }
+
+        function displaySura(target, arr) {
+            let text = "";
+            arr.forEach(e => {
+                text += e + "\n"
+            });
+            target.innerText = text;
+        }
+
+        function init() {
+            searchQue.value = 1;
+
+            readExternal(testURL, sura, dataToArray);
+
+        }
+        init();
+
+        // each harakat is a letter...
     </script>
 </body>
 
