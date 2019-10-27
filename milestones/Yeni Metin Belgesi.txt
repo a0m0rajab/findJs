@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table, td, th {
+border-collapse: collapse;
+  border: 1px solid black;
+}
+
+table {
+
+  width: 35%;
+}
+
+th,td {
+ border: 1px solid blue; 
+        padding: 4px 4px; 
+        text-align: center; 
+          width: 50px;
+  height: 50px;
+
+  
+}
+
+</style>
+</head>
+<body>
+
+<h2>The width and height Properties</h2>
+<p>Set the width of the table, and the height of the table header row:</p>
+
+<table class="fixed">
+  <tr>
+    <th><p></p></th>
+    <th><p></p></th>
+    <th><p></p></th>
+  </tr>
+  <tr>
+    <td><p></p></td>
+    <td><p></p></td>
+    <td><p></p></td>
+  </tr>
+  <tr>
+    <td><p></p></td>
+    <td><p></p></td>
+    <td><p></p></td>
+  </tr>
+  <tr>
+    <td><p></p></td>
+    <td><p></p></td>
+    <td><p></p></td>
+  </tr>
+  <tr>
+    <td><p></p></td>
+    <td><p></p></td>
+    <td><p></p></td>
+  </tr>
+</table>
+
+</body>
+</html>
