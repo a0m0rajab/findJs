@@ -10,9 +10,9 @@
 
 <body>
     <script>
-        function search(word) {
-            let subStr = document.getElementById("para").innerText.toLowerCase();
-            word = word.toLowerCase();
+        //  index of all in the text.string
+        function indexOfAll(word, target) {
+            // index start from -1 for optimisation reasons, location = locatin of thew word
             let index = -1,
                 location = [];
             // V2
@@ -20,17 +20,33 @@
             //     lastIndex = subStr.length + 1;
 
             //..
+            // the loop change the index to loop all the text isntead of stopping when it find it, check indexOf.
             do {
-                index = subStr.indexOf(word, index + 1);
+                // return -1 if not found, thats why we pop it at the end, cause it will break the loop
+                index = target.indexOf(word, index + 1);
                 // V2
                 // lastIndex = subStr.lastIndexOf(word, lastIndex);
                 // sugLoc.push(lastIndex);
                 // lastIndex = lastIndex - word.length;
                 // .. 
+
+                // add location (if found, otherwise it will be -1 and popped out.)
                 location.push(index)
+                    // no word found.
             } while (index !== -1);
+            // remove the last one.
             location.pop();
-            // sugLoc.pop();
+            return location
+        }
+
+        // generalise it to accept, arrays, text, other data type to make it a library.
+        function search(word) {
+            // get the text and normalize it.
+            let subStr = document.getElementById("para").innerText.toLowerCase();
+            // normalise the word
+            word = word.toLowerCase();
+            let location = indexOfAll(word, subStr)
+                // sugLoc.pop();
             console.log(location.length);
             return location;
         }

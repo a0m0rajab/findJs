@@ -12,12 +12,39 @@
 <body>
     <input id=Next type="button" value="Back" onclick="preSura()">
 
-    <input id=searchQue type="number" min=1 max=114 onchange="setSura(Number(this.value)-1)" onkeyup="setSura(Number(this.value)-1)">
+    <input id=page type="number" min=1 max=114 onchange="setSura(Number(this.value)-1)" onkeyup="setSura(Number(this.value)-1)">
     <input id=Next type="button" value="next" onclick="nextSura()">
+    <br>
+    <br>
+    <input id=searchQue type="text" onkeyup="setSura(Number(this.value)-1)">
 
+    <br>
 
+    <p id=found></p>
     <p id=dataShow></p>
     <script>
+        // extend string function : https://stackoverflow.com/questions/8392035/add-method-to-string-class
+        String.prototype.indeOfAll = function(word) {
+            let index = -1,
+                location = [];
+            // the loop change the index to loop all the text isntead of stopping when it find it, check indexOf.
+            do {
+                // return -1 if not found, thats why we pop it at the end, cause it will break the loop
+                index = this.indexOf(word, index + 1);
+
+                // add location (if found, otherwise it will be -1 and popped out.)
+                location.push(index)
+                    // no word found.
+            } while (index !== -1);
+            // remove the last one.
+            location.pop();
+            return location
+
+        }
+
+        // to find the word, you can either :
+        // find the word from clean text and use the index for the non clean one... or clean the text during your search, to ignore characters add it as parameter on search method.
+        // it will be like word, target, ignoreCase.
         // array that hold an array of verses of each sura.
         let sura = [];
         let chars = {
@@ -27,8 +54,10 @@
             letters: []
         }
         let lastSura = 0;
-        const URL = "a0m0rajab.githibu.io/"
-        const Quran = "quran-simple-clean.txt"
+        const URL = "https://a0m0rajab.github.io/findJs/"
+        const quran = "quran.txt"
+        const qurClean = "quran-simple-clean.txt"
+        let QurClean = "https://a0m0rajab.github.io/findJs/quran-simple-clean.txt"
         let testURL = "https://a0m0rajab.github.io/findJs/QueryCompletetion/quran.txt"
             // need to add target array to make this global and even add read function at the end.... instead of dataToArray
         function readExternal(url, target, callBack) {
@@ -37,7 +66,6 @@
                 .then(r => r.text()) //response
                 .then(t => callBack(t, target)); //text
         }
-
 
         function dataToArray(t, targetArray) {
             // split the file to line, which downloaded from Tanzil.
@@ -64,11 +92,9 @@
                 setSur(lastSura)
                 // return dataShow.innerText = "Please Choose a number between 1-114"
             lastSura = h
-            searchQue.value = h + 1;
+            page.value = h + 1;
             displaySura(dataShow, sura[h])
         }
-
-
 
         function nextSura() {
             n++;
@@ -94,10 +120,26 @@
         }
 
         function init() {
-            searchQue.value = 1;
+            page.value = 1;
 
-            readExternal(testURL, sura, dataToArray);
+            readExternal(URL + qurClean, sura, dataToArray);
 
+        }
+        // get the sura and verses that has this word.
+        function search(word) {
+            let index = -1,
+                loc = [];
+            // loop all of suras.
+            for (i = 0; i < sura.length; i++) {
+                // loop verses of each sura.
+                for (let j = 0; j < sura[i].length; j++) {
+                    let locs = sura[i][j].indexOf(word)
+                    if (locs !== -1) {
+                        loc.push([i, j])
+                    }
+                }
+            }
+            return loc;
         }
         init();
 
