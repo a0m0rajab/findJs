@@ -126,9 +126,11 @@
 
         }
         // get the sura and verses that has this word.
+
         function search(word) {
             let index = -1,
                 loc = [];
+
             // loop all of suras.
             for (i = 0; i < sura.length; i++) {
                 // loop verses of each sura.
@@ -142,7 +144,9 @@
             return loc;
         }
         init();
-
+        // for future self.
+        // for the suggestion list, use map instead of array to eliminate the duplicated word.
+        // add end of aya case ... to check the next aya, then add end of sura case.
         // each harakat is a letter...
     </script>
 </body>
