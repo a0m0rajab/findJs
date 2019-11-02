@@ -143,11 +143,14 @@
         function nextWordList(word) {
             let wordlocation = nextWordLoc(word);
             // sugwrd = suggestion word, ns= number sura, na = number aya, wls = world list.
+            // anls = aya number list
             let wls = new Set(),
                 als = new Set(),
+                anls = new Set(),
                 lastindex,
                 sugwrd, ns, na, aya;
             for (let i = 0; i < wordlocation.length; i++) {
+                anls.add([wordlocation[i][0], wordlocation[i][1]])
                 ns = wordlocation[i][0];
                 na = wordlocation[i][1];
                 aya = sura[ns][na];
@@ -173,10 +176,11 @@
                 als.add(aya)
             }
 
-            return [wls, als];
+            return [wls, anls];
         }
         init();
         // for future self.
+        // if two aya merged it cant find it, need to add splitter to know that its two aya (to suggestion list and user manipulation)
         // for the suggestion list, use set instead of array to eliminate the duplicated word.
         // add end of aya case ... to check the next aya, then add end of sura case.
         // each harakat is a letter...
