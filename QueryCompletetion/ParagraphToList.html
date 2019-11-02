@@ -50,18 +50,18 @@
             console.log(location.length);
             return location;
         }
-        // used before checking Last index of...
-        function nextWord(word) {
-            let subStr = document.getElementById("para").innerText.toLowerCase()
-            let location = search(word);
-            let sugLoc = []
-            location.forEach(
-                e => {
-                    sugLoc.push(subStr.indexOf(" ", e))
-                }
-            );
-            return sugLoc;
-        }
+        // // used before checking Last index of...
+        // function nextWord(word) {
+        //     let subStr = document.getElementById("para").innerText.toLowerCase()
+        //     let location = search(word);
+        //     let sugLoc = []
+        //     location.forEach(
+        //         e => {
+        //             sugLoc.push(subStr.indexOf(" ", e))
+        //         }
+        //     );
+        //     return sugLoc;
+        // }
         // last index of works like index of but in reverse order, and it brings the first element index..
         function nextWorLoc(word) {
             ar = search(word)
