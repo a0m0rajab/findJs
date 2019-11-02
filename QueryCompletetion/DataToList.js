@@ -160,6 +160,11 @@
                 if (sugwrd.length <= 1) {
                     wordlocation[i][1] += 1;
                     wordlocation[i][2] = -1;
+                    if (wordlocation[i][0] >= 113) {
+                        wordlocation[i][0] = 0;
+                        wordlocation[i][1] = 0;
+                    }
+
                     i--;
                     continue;
 
